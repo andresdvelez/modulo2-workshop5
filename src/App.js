@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./layout/Layout";
+import CarShop from "./pages/carshop/CarShop";
 import Home from "./pages/home/Home";
 import Search from "./pages/search/Search";
 
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
         </Route>
+        <Route path="/car" element={<CarShop />} />
       </Routes>
     </Router>
   );
