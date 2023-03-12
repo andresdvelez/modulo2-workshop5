@@ -10,7 +10,10 @@ module.exports = {
       },
       fontFamily: {
         TiltWarp: ["Tilt Warp, cursive"],
-      }
+      },
+      colors: {
+        "main-bg": "#FCF0F0",
+      },
     },
   },
   plugins: [],
