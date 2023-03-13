@@ -97,6 +97,7 @@ const Home = () => {
                                 images={pizza.images}
                                 name={pizza.name}
                                 price={pizza.price}
+                                id={pizza.id}
                             />
                         ))}
                     </motion.div>

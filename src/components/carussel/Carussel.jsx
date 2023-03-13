@@ -4,28 +4,28 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 function Carussel(props) {
-    const { images, name, price } = props;
+    const { images, name, price, id } = props;
     const item = {
         hidden: { y: 20, opacity: 0 },
         show: { y: 0, opacity: 1, transition: { duration: 0.5 } },
         exit: { y: -20, opacity: 0, transition: { duration: 0.5 } },
     };
 
-    // const navigate = useNavigate();
-    // const handleClick = () => {
-    //     navigate("/");
-    // };
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/detail/${id}`);
+    };
     return (
         <>
             <motion.div
                 variants={item}
-                className="h-56 sm:h-64 xl:h-80 2xl:h-96 relative mb-6 mt-5"
-                /*  onClick={handleClick} */
+                className="h-56 sm:h-64 xl:h-80 2xl:h-96 relative mb-6 object-cover  bg-black"
+                onClick={handleClick} 
             >
                 <Carousel leftControl=" " rightControl=" ">
                     {images.map((image, index) => (
                         <img
-                            className="brightness-50"
+                            className="brightness-50 bject-cover"
                             key={index}
                             src={image}
                             alt="..."

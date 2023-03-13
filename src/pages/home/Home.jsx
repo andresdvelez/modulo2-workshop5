@@ -14,42 +14,23 @@ const Home = () => {
         getPizza();
     }, []);
 
-    const pizzasHawaiana = pizzas.find((pizza) => pizza.id === "1");
-    const pizzasMargherita = pizzas.find((pizza) => pizza.id === "2");
-    const pizzasNapolitana = pizzas.find((pizza) => pizza.id === "3");
-    const pizzasEspañola = pizzas.find((pizza) => pizza.id === "4");
+
 
     return (
         <>
             <div className=" flex flex-col p-10 ">
-                {pizzasHawaiana && (
+                {
+                    pizzas.map((pizzaObject, index) => (
                     <Carussel
-                        images={pizzasHawaiana.images}
-                        name={pizzasHawaiana.name}
-                        price={pizzasHawaiana.price}
-                    />
-                )}
-                {pizzasMargherita && (
-                    <Carussel
-                        images={pizzasMargherita.images}
-                        name={pizzasMargherita.name}
-                        price={pizzasMargherita.price}
-                    />
-                )}
-                {pizzasNapolitana && (
-                    <Carussel
-                        images={pizzasNapolitana.images}
-                        name={pizzasNapolitana.name}
-                        price={pizzasNapolitana.price}
-                    />
-                )}
-                {pizzasEspañola && (
-                    <Carussel
-                        images={pizzasEspañola.images}
-                        name={pizzasEspañola.name}
-                        price={pizzasEspañola.price}
-                    />
-                )}
+                    images={pizzaObject.images}
+                    name={pizzaObject.name}
+                    price={pizzaObject.price}
+                    id={pizzaObject.id}
+                    key={index}
+                />
+                ))
+                }
+
             </div>
         </>
     );
