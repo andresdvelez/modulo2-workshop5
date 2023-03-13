@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 //Icons
 import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 function CarShop() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const [numInputValue, setNumInputValue] = useState("");
+
+  const onSubmit = () => {
+    navigate("/status");
+  };
+
+  const formatCardNum = (e) => {
+    let inputValue = e.target.value;
+    inputValue.toString();
+
+    const newInputValue = inputValue
+      .replace(/\s/g, "")
+      .replace(/([0-9]{4})/g, "$1 ")
+      .trim();
+    setNumInputValue(newInputValue);
+  };
+
+  const formatDueDate = ({ target }) => {
+    let slash = false;
+    if (target.value.split("").length === 2 && !slash) {
+      target.value = target.value + "/";
+      slash = true;
+    } else if (target.value.split("").length === 1) {
+      slash = false;
+    }
+  };
+
   return (
     <section className="bg-main-bg flex flex-col gap-5 px-3 py-8">
       <header className="flex items-center gap-2 font-bold">
@@ -24,7 +61,7 @@ function CarShop() {
           </div>
         </div>
       </div>
-      <form className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <h2 className="font-bold">Información de pago</h2>
         <label>
           <span>Nombre completo</span>
@@ -34,7 +71,18 @@ function CarShop() {
             aria-label="Nombre completo"
             id="name"
             className="p-3 w-full"
+            {...register("fullname", {
+              required: "Este campo es requerido",
+              pattern: /[A-z]/g,
+            })}
           />
+          {errors.fullname ? (
+            <span className="text-red-500 text-sm">
+              {errors.fullname.message}
+            </span>
+          ) : (
+            ""
+          )}
         </label>
 
         <label>
@@ -45,7 +93,20 @@ function CarShop() {
             aria-label="Número de Tarjeta de crédito"
             id="cardNumber"
             className="p-3 w-full"
+            {...register("cardNum", {
+              required: "Este campo es requerido",
+            })}
+            onInput={(e) => formatCardNum(e)}
+            value={numInputValue}
+            maxLength="19"
           />
+          {errors.cardNum ? (
+            <span className="text-red-500 text-sm">
+              {errors.cardNum.message}
+            </span>
+          ) : (
+            ""
+          )}
         </label>
 
         <div className="flex gap-3">
@@ -56,8 +117,20 @@ function CarShop() {
               placeholder="MM/YY"
               aria-label="Fecha vencimiento"
               id="dueDate"
+              maxLength="5"
               className="p-3 w-full"
+              onInput={formatDueDate}
+              {...register("dueDate", {
+                required: "Este campo es obligatorio",
+              })}
             />
+            {errors.dueDate ? (
+              <span className="text-red-500 text-sm">
+                {errors.dueDate.message}
+              </span>
+            ) : (
+              ""
+            )}
           </label>
 
           <label>
@@ -67,8 +140,17 @@ function CarShop() {
               placeholder="000"
               aria-label="CVV"
               id="cvv"
+              maxLength="3"
               className="p-3 w-full"
+              {...register("cvv", {
+                required: "Este campo es obligatorio",
+              })}
             />
+            {errors.cvv ? (
+              <span className="text-red-500 text-sm">{errors.cvv.message}</span>
+            ) : (
+              ""
+            )}
           </label>
         </div>
         <label htmlFor="address">
@@ -79,10 +161,20 @@ function CarShop() {
             aria-label="Dirección"
             id="address"
             className="p-3 w-full"
+            {...register("address", {
+              required: "Este campo es obligatorio",
+            })}
           />
+          {errors.address ? (
+            <span className="text-red-500 text-sm">
+              {errors.address.message}
+            </span>
+          ) : (
+            ""
+          )}
         </label>
         <button
-          className="bg-[#E50062] text-slate-50 py-3 rounded-md shadow-lg shadow-red-400 "
+          className="bg-[#E50062] text-slate-50 py-3 rounded-md shadow-lg shadow-red-400"
           type="submit"
         >
           Pagar Ahora
