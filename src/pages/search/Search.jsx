@@ -3,13 +3,14 @@ import Carussel from "../../components/carussel/Carussel";
 import { BiSearch } from "react-icons/bi";
 import { IoPizzaOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getApiPizzas } from "../../services/users";
 
 const Home = () => {
     const [pizzas, setPizzas] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResultsCount, setSearchResultsCount] = useState(0);
+    const navigate = useNavigate();
 
     const container = {
         hidden: { opacity: 0 },
@@ -28,19 +29,14 @@ const Home = () => {
         },
     };
 
-    useEffect(() => {
-        async function fetchData() {
-            const response = await axios.get(
-                "https://back-worksop5-production.up.railway.app/pizzas"
-            );
-            setPizzas(response.data);
-            console.log(response.data);
-            setSearchResultsCount(filteredPizzas.length);
-        }
-        fetchData();
-    }, []);
+    const getPizza = async () => {
+        const response = await getApiPizzas();
+        setPizzas(response);
+        setSearchResultsCount(filteredPizzas.length);
+    };
 
     useEffect(() => {
+        getPizza();
         const filteredPizzas = pizzas.filter((pizza) =>
             pizza.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -51,6 +47,12 @@ const Home = () => {
         pizza.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    // const handleClick = () => {
+    //     navigate("/");
+    // };
+
+    // navigate(`/pizza/${JSON.stringify(pizza)}`);
+
     return (
         <>
             <motion.div
@@ -58,9 +60,10 @@ const Home = () => {
                 initial="hidden"
                 animate="show"
                 exit="exit"
+                id="top"
                 className="flex flex-col bg-slate-200 p-10 gap-5 h-[1620px] "
             >
-                <section className="flex mt-10  rounded-full p-1 items-center w-full bg-white justify-between relative">
+                <section className="flex mt-10  rounded p-1 items-center w-full bg-white justify-between relative">
                     <input
                         className=" border-none outline-0  rounded h-8 w-full"
                         type="text"
@@ -76,7 +79,7 @@ const Home = () => {
                     </span>
                 )}
 
-                <figure className=" flex flex-col gap-4 absolute w-full  items-center top-36">
+                <figure className=" flex flex-col gap-4 absolute w-full right-0 items-center top-36">
                     <IoPizzaOutline className="text-9xl mt-14 rotate-[230deg] text-gray-500" />
                     <span>Busca la Pizza que mas te gusta</span>
                 </figure>
@@ -87,18 +90,15 @@ const Home = () => {
                         initial="hidden"
                         animate="show"
                         exit="exit"
-                        className="flex flex-col gap-5"
                     >
-                        <Link to={"/pizzas/${pizza.id}"}>
-                            {filteredPizzas.map((pizza) => (
-                                <Carussel
-                                    key={pizza.id}
-                                    images={pizza.images}
-                                    name={pizza.name}
-                                    price={pizza.price}
-                                />
-                            ))}
-                        </Link>
+                        {filteredPizzas.map((pizza) => (
+                            <Carussel
+                                key={pizza.id}
+                                images={pizza.images}
+                                name={pizza.name}
+                                price={pizza.price}
+                            />
+                        ))}
                     </motion.div>
                 )}
             </motion.div>
