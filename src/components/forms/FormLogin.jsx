@@ -37,8 +37,7 @@ function FormLogin() {
     };
     
     useEffect(() => {
-        getUser();
-        
+        getUser();      
     }, []);
 
     return(

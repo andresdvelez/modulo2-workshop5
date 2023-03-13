@@ -1,28 +1,33 @@
-import React, { useId} from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { BiUser} from 'react-icons/bi';
 import {BiLockAlt } from 'react-icons/bi'
 import {HiOutlineMail} from 'react-icons/hi';
 import {RxImage} from 'react-icons/rx';
 import { postNewUser } from "../../services/users";
+import Swal from 'sweetalert2'
 
 const Register = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset
     } = useForm();
-
-    const userId = useId();
 
     const onSubmit = async (formData) => {
         console.log(formData);
         await postNewUser({
-            id: userId,
             ...formData,
             auth: false,   
         })
+        reset()
+        Swal.fire('Excelente!',
+        'Usuario registrado con exito!',
+        'success');
+
     };
+
 
 
 
@@ -100,7 +105,7 @@ const Register = () => {
             {errors.password && (
                 <span className="message--error">{errors.password.message}</span>
             )}
-
+        
             <button className="w-80 bg-gray-200 rounded p-2 font-semibold mb-5" type="submit">Registrarse</button>
             
         </form>
