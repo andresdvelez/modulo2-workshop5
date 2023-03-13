@@ -17,8 +17,9 @@ const Register = () => {
 
     const onSubmit = async (formData) => {
         console.log(formData);
-        await postNewUser({...formData,
+        await postNewUser({
             id: userId,
+            ...formData,
             auth: false,   
         })
     };
