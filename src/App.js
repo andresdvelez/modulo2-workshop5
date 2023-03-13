@@ -1,9 +1,8 @@
 import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-    Navigate
-    
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
 } from "react-router-dom";
 import Layout from "./layout/Layout";
 import CarShop from "./pages/carshop/CarShop";
@@ -13,18 +12,17 @@ import Login from "./pages/login/Login";
 import Single from './pages/single/Single'
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Status from "./pages/status/Status";
 
 function App() {
-
-    const {user} = useContext(AuthContext);
-    const ProtectedRoute = ({children}) => {
-        if (!user) {
-            return <Navigate to="/login" />
-
-        }
-        return children;
+  const { user } = useContext(AuthContext);
+  const ProtectedRoute = ({ children }) => {
+    if (!user) {
+      return <Navigate to="/login" />;
     }
-
+    
+    return children;
+  };
 
     return (
         <Router>
@@ -37,9 +35,9 @@ function App() {
                 
                     <Route path="/search" element={<Search />} />
                 </Route>
-
+                <Route path="/detail/:id" element={<ProtectedRoute> <Single /> </ProtectedRoute>} />
                 <Route path="/car" element={<ProtectedRoute> <CarShop /> </ProtectedRoute>} />
-                <Route path="/detail/:id" element={<Single />} />
+                <Route path="/status" element={<ProtectedRoute> <Status /> </ProtectedRoute>} />
             </Routes>
         </Router>
     );
