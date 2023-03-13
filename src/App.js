@@ -10,6 +10,7 @@ import CarShop from "./pages/carshop/CarShop";
 import Home from "./pages/home/Home";
 import Search from "./pages/search/Search";
 import Login from "./pages/login/Login";
+import Single from './pages/single/Single'
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 
@@ -38,6 +39,7 @@ function App() {
                 </Route>
 
                 <Route path="/car" element={<ProtectedRoute> <CarShop /> </ProtectedRoute>} />
+                <Route path="/detail/:id" element={<Single />} />
             </Routes>
         </Router>
     );
