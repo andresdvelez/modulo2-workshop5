@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FiBookOpen } from "react-icons/fi";
 import { BiSearch } from "react-icons/bi";
 import { FaShoppingBasket } from "react-icons/fa";
