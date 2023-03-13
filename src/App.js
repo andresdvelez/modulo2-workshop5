@@ -1,3 +1,4 @@
+<<<<<<<<< Temporary merge branch 1
 import {
     BrowserRouter as Router,
     Route,

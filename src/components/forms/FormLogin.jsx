@@ -38,7 +38,9 @@ function FormLogin() {
 
     useEffect(() => {
         getUser();
-        
+=========
+        getUser();      
+>>>>>>>>> Temporary merge branch 2
     }, []);
 
     return (
