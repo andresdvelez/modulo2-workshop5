@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Carussel from "../../components/carussel/Carussel";
-import axios from "axios";
+import { getApiPizzas } from "../../services/users";
 
 const Home = () => {
     const [pizzas, setPizzas] = useState([]);
 
+    const getPizza = async () => {
+        const response = await getApiPizzas();
+        setPizzas(response);
+    };
+
     useEffect(() => {
-        async function fetchData() {
-            const response = await axios.get(
-                "https://back-worksop5-production.up.railway.app/pizzas"
-            );
-            setPizzas(response.data);
-            console.log(response.data);
-        }
-        fetchData();
+        getPizza();
     }, []);
 
     const pizzasHawaiana = pizzas.find((pizza) => pizza.id === "1");
@@ -23,7 +21,7 @@ const Home = () => {
 
     return (
         <>
-            <div className=" flex flex-col mb-10 p-10 gap-5 ">
+            <div className=" flex flex-col p-10 ">
                 {pizzasHawaiana && (
                     <Carussel
                         images={pizzasHawaiana.images}
