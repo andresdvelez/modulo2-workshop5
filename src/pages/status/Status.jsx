@@ -5,6 +5,7 @@ import serpentinas from "../../assets/serpentinas.png";
 
 function Status() {
   return (
+    <div className="w-screen h-screen bg-neutral-500 bg-no-repeat lg:flex lg:items-center lg:justify-center">
     <section className="bg-main-bg px-4 py-10 flex flex-col items-center">
       <div className="bg-white w-full h-60 mb-7 relative">
         <img
@@ -29,6 +30,7 @@ function Status() {
         Aceptar
       </Link>
     </section>
+    </div>
   );
 }
 
