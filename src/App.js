@@ -1,9 +1,9 @@
-
 import {
     BrowserRouter as Router,
     Route,
     Routes,
-    useParams,
+    Navigate
+    
 } from "react-router-dom";
 import Layout from "./layout/Layout";
 import CarShop from "./pages/carshop/CarShop";
